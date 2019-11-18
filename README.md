@@ -1,2 +1,77 @@
-# combine
-Combine Framework를 스터디하는 공간
+# Combine
+
+> WWDC 2019에서 새롭게 발표된 `Combine` framework 스터디를 시작합니다.
+
+## Contents
+* [Tools](https://github.com/fimuxd/RxSwift#tools)
+* [Curriculum](https://github.com/fimuxd/RxSwift#curriculum)
+* [ContactMe](https://github.com/fimuxd/RxSwift#ContactMe)
+
+## Tools
+* 📘 Combine: Asynchronous Programming with Swift by Scott Gardner, Shai Mishali ([구매하기](https://store.raywenderlich.com/products/combine-asynchronous-programming-with-swift)
+* macOS Mojave(10.14) or Later
+* 🔨 Xcode 11 or Later
+* Swift 중급 레벨의 지식
+
+## Curriculum
+
+* 총 5개의 Section과 20개의 Chapter로 구성되어 있습니다.
+
+* 일단 한 Chapter 씩 차근차근히 읽어나갈 계획입니다. (goals: min 1 chapter/day)
+
+* 각 Chapter 별로 Summary한 내용들을 기록할 계획입니다.
+
+* 개인적인 스터디 + 추후 틈틈히 챙겨볼 handbook 목적입니다.
+
+* **Section I: Introduction to Combine**
+  > | Ch# | Chapter Subject | Note |
+  > |:---:| :--- | :--- |
+  > |1| Hello, Combine! | Combine 개요 |
+  > |2| Publishers & Subscribers | WIP |
+  
+* **Section II: Operators**
+  > | Ch# | Chapter Subject | Note |
+  > |:---:| :--- | :--- |
+  > |3| Transforming Operators | WIP |
+  > |4| Filtering Operators | WIP |
+  > |5| Combining Operators | WIP |
+  > |6| Time Manipulation Operators | WIP |
+  > |7| Sequence Operators | WIP |
+  > |8| In Practice: Project "Collage" | WIP |
+  
+* **Section III: Combine in Action**
+  > | Ch# | Chapter Subject | Note |
+  > |:---:| :--- | :--- |
+  > |9| Networking | WIP |
+  > |10| Debugging | WIP |
+  > |11| Timers | WIP |
+  > |12| Key-Value Observing | WIP |
+  > |13| Resource Manangement | WIP |
+  > |14| In Practice: Project "News" | WIP |
+  
+* **Section IV: Advanced Combine**
+  > | Ch# | Chapter Subject | Note |
+  > |:---:| :--- | :--- |
+  > |15| In Practice: SwiftUI & Combine | WIP |
+  > |16| Error Handling | WIP |
+  > |17| Schedulers | WIP |
+  > |18| Custom Publishers & Handling Backpressure | WIP |
+  > |19| Testing | WIP |
+
+* **Section V: Building a Complete App**
+  > | Ch# | Chapter Subject | Note |
+  > |:---:| :--- | :--- |
+  > |20| In Practice: Building a Complete App | WIP |
+
+* **Etc** 
+
+  > | Date         | Title                                                    | Description(Subject)                                         | Note                                                         |
+  > | ------------ | -------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  > | Nov 12, 2019 | [Let'Swift 2019: 스위프트 컨퍼런스](http://letswift.kr/2019/) | RxSwift to Combine (feat. SwiftUI) | [발표자료](https://www.slideshare.net/BoYoungPark11/rxswift-to-combine-192620911) |
+
+## ContactMe
+* 📱 +82 10.3316.1609
+* 📧 iosdeveloperkr@gmail.com
+
+***
+***Life is a game. Play it :)***
