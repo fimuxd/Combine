@@ -3,9 +3,9 @@
 > WWDC 2019에서 새롭게 발표된 `Combine` framework 스터디를 시작합니다.
 
 ## Contents
-* [Tools](https://github.com/fimuxd/RxSwift#tools)
-* [Curriculum](https://github.com/fimuxd/RxSwift#curriculum)
-* [ContactMe](https://github.com/fimuxd/RxSwift#ContactMe)
+* [Tools](https://github.com/fimuxd/Combine#tools)
+* [Curriculum](https://github.com/fimuxd/Combine#curriculum)
+* [ContactMe](https://github.com/fimuxd/Combine#ContactMe)
 
 ## Tools
 * 📘 Combine: Asynchronous Programming with Swift by Scott Gardner, Shai Mishali ([구매하기](https://store.raywenderlich.com/products/combine-asynchronous-programming-with-swift)
