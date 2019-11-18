@@ -55,11 +55,11 @@ Apple은 매 해를 거듭하며 비동기 프로그래밍 방식을 개선했�
 
 일반적으로 대부분의 코드는 작업을 비동기식으로 수행하고 모든 UI 이벤트는 본질적으로 비동기적이므로 전체 앱 코드가 실행될 순서를 가정하는 것은 사실상 불가능합니다. 또한 괜찮은 비동기식 프로그램 작성은 쉽지 않습니다. 비동기 코드와 리소스 공유는 재현이나 추적이 어렵고 궁극적으로 수정하기도 어려운 문제를 일으킬 수 있습니다. 이런 문제의 원인은 실제 앱이 각각의 고유한 인터페이스를 가지는 비동기 API들을 사용하는데 있습니다. 
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/1.%20asynchronous.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/1.%20asynchronous.png" width = 400>
 
 Combine은 이렇게 혼란스러운 비동기 프로그래밍 세계를 질서정연하게 정리하는데 도움이 되는 새로운 언어를 Swift 생태계에 도입하는 녀석입니다. Apple은 Combine의 API를 Foundation framework 깊숙히 통합시켰기 때문에 `Timer`, `NotificationCenter`, core framework와 같은 **Core Data** 들은 이미 Combine을 사용하고 있습니다. 따라서 Combine을 기존의 코드에 도입하는 것은 아주 쉬울거예요. 또한 Apple은 놀랍고 새로운 UI framework인  **SwiftUI** 를 설계하여 Combine과 쉽게 통합되도록 했습니다. 여기 Apple이 Combine을 사용하여 반응형 프로그래밍을 사용하는 방법을 알 수 있도록 시스템 계층 구조에서 Combine이 어디에 있는지 보여주는 다이어그램이 있습니다. 
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/2.%20combine.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/2.%20combine.png" width = 400>
 
 Foundation에서 SwiftUI에 이르기까지 다양한 시스템 framework는 Combine에 의존하며 "전통적인" API의 대안으로 Combine 으로의 통합을 제공합니다. Combine은 Apple의 framework이므로 `Timer` 또는 `NotificationCenter` 와 같이 이미 테스트로 검증되고 잘 만들어져있는 API를 제거하고 대체하는 것을 목표로 하지 않습니다. 대신 Combine 으로 통합되어 서로 비동기식으로 커뮤니케이션하려는 앱의 모든 유형이 Combine을 사용할 수 있도록 합니다. 
 
@@ -81,7 +81,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 
 다음은 `Int` 값을 방출하는 Publishers를 타임 라인에 시각화한 것입니다. 
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/3.%20publishers.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/3.%20publishers.png" width = 400>
 
 - 위 그림에서 파란색 상자는 타임 라인에서 특정 시간에 방출되는 값을 나타내고 숫자는 방출된 값을 나타냅니다. 그림 오른쪽에 보이는 것과 같은 수직선(|)은 성공적으로 스트림이 완료되었다는 것을 의미합니다. 
 - 위 Publisher가 다룰 수 있는 이벤트 유형은 매우 보편적이기 때문에 모든 종류의 동적 데이터를 나타낼 수 있습니다. 즉, Combine의 Publishers를 사용하여 앱의 모든 작업을 처리할 수 있는 것입니다. 델리게이트를 추가하거나 completion callback을 주입하는 대신 Publishers를 사용할 수 있습니다. 
@@ -96,7 +96,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 - 여러 Operator를 차례로 호출해서 체인을 연결할 수 있기 때문에 매우 유용합니다. 이들은 매우 독립적으로 구성가능하기 때문에 하나의 구독 사이에서 아주 복잡한 로직을 구현하도록 서로 결합될 수 있습니다.
 - Operator가 퍼즐 조각처럼 서로 잘 맞도록 하는 방법은 간단합니다. Output이 다음 Input 유형과 일치하지 않으면 결합할 수 없습니다.
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/4.%20operator.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/4.%20operator.png" width = 400>
 
 - Operator는 항상 Input 및 Output을 가지고 있으며 일반적으로는 이를 upstream, downstream이라고 합니다. 이를 통해 공유 상태 (앞서 논의한 비동기적 프로그래밍의 핵심 문제 중 하나)를 피할 수 있습니다.
 - Operator는 이전 operator로부터 받은 데이터 작업에 중점을 두고 그 결과를 체인의 다음 operator에게 제공합니다. 즉, 비동기적으로 실행되는 다른 코드는 작업 중인 데이터를 "건너뛰고" 변경할 수 없습니다. 
@@ -104,7 +104,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 ### 3. Subscribers
 - 모든 구독은 subscriber와 함께 종료됩니다. Subscribers는 일반적으로 방출된 값 또는 완료 이벤트를 통해 "무언가"를 하는 역할입니다.
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/5.%20subscriber.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/5.%20subscriber.png" width = 400>
 
 - 현재, Combine은 데이터 스트림 작업을 간단하게 해줄 수 있는 두 개의 빌트인 subscriber를 제공하고 있습니다.
 	- **sink** subscriber는 output 값과 완료를 수신할 수 있는 closure를 제공합니다. 
@@ -119,7 +119,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 - subscription은 사용자 정의 코드 및 에러처리를 사용하여 비동기 이벤트 체인을 한 번만 선언할 수 있다는 점에서 아주 좋은 개념입니다.
 - 즉, 모든 코드를 Combine으로 구현한다고 상상해보면, subscription을 통해 전체 앱의 로직을 구현하고, 한번 구현이 완료되면 시스템이 데이터를 푸시하거나 가져오거나 object 또는 다른 object를 호출할 필요 없이 모든 것이 실행되도록 할 수 있습니다. (😯)
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/6.%20subscription.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/6.%20subscription.png" width = 400>
 
 - subscription 코드가 성공적으로 컴파일되고 작성한 코드에 논리적인 문제가 없다면 - 끝! 설계를 한대로 subscription은 사용자의 제스처, 타이머가 꺼지거나 다른 항목이 publisher 중 하나를 활성화 시킬 때 마다 비동기식으로 "실행" 될 것입니다.
 - 또한 `Cancellable`이라는 Combine에서 제공하는 protocol 덕분에 subscription을 메모리로 관리할 필요가 없습니다.
@@ -144,7 +144,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 - Combine과 SwiftUI를 동시에 채택하면 약간 다른 이야기가 될 수 있습니다. 이 경우 MVC 아키텍처에서 C를 삭제하는 것이 좋습니다만 이는 Combine과 SwiftUI를 함께 사용하기 때문에 요구되는 것입니다. 이 둘은 같은 공간에 있을 때 더욱 간단하게 작동합니다.
 - View Controller는 Combine/SwiftUI 팀에 필요없습니다. 데이터 모델에서 View에 이르기까지 반응형 프로그래밍을 사용하는 경우 View를 제어하기 위해 특별한 Controller가 필요하지 않습니다. (✨)
 
-<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/7.%20architecture.png" width = 150>
+<img src = "https://github.com/fimuxd/combine/blob/master/Lectures/01_Hello%2C%20Combine!/7.%20architecture.png" width = 400>
 
 - 더 자세한 내용은 Ch.15 In Practice: SwiftUI & Combine에서 다루겠습니다.
 
