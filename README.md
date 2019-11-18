@@ -26,7 +26,7 @@
 * **Section I: Introduction to Combine**
   > | Ch# | Chapter Subject | Note |
   > |:---:| :--- | :--- |
-  > |1| Hello, Combine! | Combine 개요 |
+  > |1| [Hello, Combine!](https://github.com/fimuxd/Combine/blob/master/Lectures/01_Hello%2C%20Combine!/Ch.1%20Hello%2C%20Combine!.md) | Combine 개요 |
   > |2| Publishers & Subscribers | WIP |
   
 * **Section II: Operators**
