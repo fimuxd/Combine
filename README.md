@@ -8,7 +8,7 @@
 * [ContactMe](https://github.com/fimuxd/Combine#ContactMe)
 
 ## Tools
-* 📘 Combine: Asynchronous Programming with Swift by Scott Gardner, Shai Mishali ([구매하기](https://store.raywenderlich.com/products/combine-asynchronous-programming-with-swift)
+* 📘 Combine: Asynchronous Programming with Swift by Scott Gardner, Shai Mishali ([구매하기](https://store.raywenderlich.com/products/combine-asynchronous-programming-with-swift))
 * macOS Mojave(10.14) or Later
 * 🔨 Xcode 11 or Later
 * Swift 중급 레벨의 지식
