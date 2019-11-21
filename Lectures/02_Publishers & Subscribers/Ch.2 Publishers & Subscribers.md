@@ -19,14 +19,15 @@
 	}
 	```
 
-	// 1: notification의 이름을 생성했습니다.
-	// 2: `NotificationCenter`의 default center에 접근하고 `publisher(for:object:)` method 를 호출합니다. 이 method의 return 값을 내부상수로 선언하였습니다. 
+	- 1: notification의 이름을 생성했습니다.
+	
+	- 2: `NotificationCenter`의 default center에 접근하고 `publisher(for:object:)` method 를 호출합니다. 이 method의 return 값을 내부상수로 선언하였습니다. 
 
 	- `publisher(for:object:)`를 **Option-click** 해보면 이 method의 return 값이 default notification center가 notification을 broadcast 할 때마다 이벤트를 방출하는 `Publisher` 인 것을 알 수 있습니다. 이미 notification center에서 publisher 없이 notification을 broadcast 할 수 있는 것 같지 않나요? 
 	- 바로 `NotificationCenter`와 같은 기존 API를 통해 이전 방법에서 Combine과 같은 새로운 방법으로 연결될 수 있습니다. 
 - Publisher는 두 종류의 이벤트를 방출합니다.
-	// 1: 값, 요소(element) 라고도 불리는 아이
-	// 2:  완료 이벤트
+	- 1: 값, 요소(element) 라고도 불리는 아이
+	- 2:  완료 이벤트
 - publisher는 0개 이상의 값을 방출할 수 있지만 일반적인 완료 또는 에러로 나타날 수 있는 완료 이벤트는 단 한개만 방출합니다. 한 번 publisher가 완료 이벤트를 방출하고 나면 종료되어서 더 이상의 이벤트 방출을 발생하지 않습니다.
 - 위 코드를 좀 더 진행시켜 보겠습니다.
 
@@ -51,10 +52,10 @@
 
 	주석 번호대로 따라가보면,
 
-	// 3: default notification center를 핸들링 할 수 있도록 상수를 하나 만들어줬습니다.
-	// 4: 위 1번에서 이름을 만들어준 notification을 볼 수 있도록 observer를 만들어줍니다.
-	// 5: notificationd을 만들어준 이름과 같이 post 합니다.
-	// 6: observer를 notification center에서 제거합니다.
+	- 3: default notification center를 핸들링 할 수 있도록 상수를 하나 만들어줬습니다.
+	- 4: 위 1번에서 이름을 만들어준 notification을 볼 수 있도록 observer를 만들어줍니다.
+	- 5: notificationd을 만들어준 이름과 같이 post 합니다.
+	- 6: observer를 notification center에서 제거합니다.
 
 	- 위 코드를 playground에서 실행시킨다면 콘솔에 `Notification received!` 가 입력되는 것을 확인할 수 있습니다.
 	- 다만 위 코드 예제에서는 outputd이 실제로 publisher를 통해 나온 것이 아니기 때문에 약간 오해의 소지가 있습니다. 이를 완전히 이해하려면 subscriber를 알아야 합니다.
@@ -106,8 +107,8 @@
 	}
 	```
  
-	// 1: 기본 값 형식으로 publisher를 만들 수 있는 `Just`를 이용하여 publisher를 생성합니다. 
-	// 2: publisher에 대한 subscription을 작성하고 수신된 각 이벤트에 대해 print가 찍히도록 했습니다.
+	- 1: 기본 값 형식으로 publisher를 만들 수 있는 `Just`를 이용하여 publisher를 생성합니다. 
+	- 2: publisher에 대한 subscription을 작성하고 수신된 각 이벤트에 대해 print가 찍히도록 했습니다.
 
 	- playground을 실행하면 다음과 같이 표시됩니다.
 	
@@ -165,10 +166,10 @@
 	}
 	```
 
-	// 1: 새 값을 print 하는 `didSet` property Observer와 class를 작성합니다.
-	// 2: 해당 class instance를 선언합니다.
-	// 3: String 배열을 통해 publisher를 생성합니다.
-	// 4: object를 통해 발생하는 각각의 값을 `value` 속성에 할당해서 publisher를 구독합니다.
+	- 1: 새 값을 print 하는 `didSet` property Observer와 class를 작성합니다.
+	- 2: 해당 class instance를 선언합니다.
+	- 3: String 배열을 통해 publisher를 생성합니다.
+	- 4: object를 통해 발생하는 각각의 값을 `value` 속성에 할당해서 publisher를 구독합니다.
 
 	- 콘솔에는 다음과 같이 표시될 것입니다.
 		```
@@ -193,8 +194,8 @@
 	subscription.cancel()
 	```
 
-	// 1: (원래와 동일하게) notification을 post 합니다.
-	// 2: subscription을 취소합니다. subscription에 `cancel()` 호출을 할 수 있는데 이 것은 `Subscription` protocol이 `Cancellable` 을 상속했기 때문입니다.
+	- 1: (원래와 동일하게) notification을 post 합니다.
+	- 2: subscription을 취소합니다. subscription에 `cancel()` 호출을 할 수 있는데 이 것은 `Subscription` protocol이 `Cancellable` 을 상속했기 때문입니다.
 
 	- 콘솔에는 다음과 같이 표시될 것입니다.
 		```
@@ -241,10 +242,10 @@
 	}
 	```
 
-	// 1: publisher가 생성할 수 있는 값 타입
-	// 2: publisher가 발생시킬 수도 있는 error 타입. 만약 error를 발생시키지 않는다고 보장할 수 있다면 `Never`.
-	// 3: subscriber는 publisher의 `subscribe(_:)` 을 호출할 수 있습니다.
-	// 4: `subscribe(_:)` 구현체는 `receive(subscriber:)`를 호출하여 subscriber를 publisher에 연결합니다. 즉, subscription을 만듭니다.
+	- 1: publisher가 생성할 수 있는 값 타입
+	- 2: publisher가 발생시킬 수도 있는 error 타입. 만약 error를 발생시키지 않는다고 보장할 수 있다면 `Never`.
+	- 3: subscriber는 publisher의 `subscribe(_:)` 을 호출할 수 있습니다.
+	- 4: `subscribe(_:)` 구현체는 `receive(subscriber:)`를 호출하여 subscriber를 publisher에 연결합니다. 즉, subscription을 만듭니다.
 
 	- associated type은 subscription을 만드려면 subscriber가 반드시 일치시켜야하는 publisher의 인터페이스 입니다.
 
@@ -269,11 +270,11 @@
 	}
 	```
 
-	// 1: subscriber가 받을 수 있는 값 타입
-	// 2: subscriber가 받을 수 있는 error 타입 또는 subscriber가 error를 받지 않는다면 `Never`
-	// 3: publisher가 subscription을 전달하기 위해 subscriber의 `receive(subscription:)`을 호출합니다.
-	// 4: publisher가 방출하는 새로운 값들을 전달하기 위해 subscriber의 `receive(_:)`를 호출합니다.
-	// 5: publisher가 값 생성이 종료되었거나 error가 발생하였을 때 종료를 알리기 위해 subscriber의 `receive(completion:)`을 호출합니다.
+	- 1: subscriber가 받을 수 있는 값 타입
+	- 2: subscriber가 받을 수 있는 error 타입 또는 subscriber가 error를 받지 않는다면 `Never`
+	- 3: publisher가 subscription을 전달하기 위해 subscriber의 `receive(subscription:)`을 호출합니다.
+	- 4: publisher가 방출하는 새로운 값들을 전달하기 위해 subscriber의 `receive(_:)`를 호출합니다.
+	- 5: publisher가 값 생성이 종료되었거나 error가 발생하였을 때 종료를 알리기 위해 subscriber의 `receive(completion:)`을 호출합니다.
 
 - publisher와 subscriber는 subscription을 통해 연결됩니다. 아래의 `Subscription` protocol을 확인해봅시다.
 
@@ -325,12 +326,12 @@
 	}
 	```
 
-	// 1: 범위의 `Int` 값을 `publisher` property를 통해 publisher 생성
-	// 2: `IntSubscriber` 라는 사용자 subscriber 정의
-	// 3: type aliases를 통해 subscriber가 `Int` input 및 에러를 생성하지 않음을 명시
-	// 4: publisher를 통해 호출된 `receive(subscription:)`를 통해 subscriber가 subscription시 최대 3개의 값을 수신할 것임을 지정하고 subscription의 `.request(_:)` 를 호출합니다.
-	// 5: 수신한 각 값을 print 하고 `.none` 을 반환하여 subscriber가 수요를 조정하지 않음을 나타냅니다. 즉, `.none`은 `.max(0)` 과 같은 의미입니다.
-	// 6: 완료 이벤트를 print 합니다.
+	- 1: 범위의 `Int` 값을 `publisher` property를 통해 publisher 생성
+	- 2: `IntSubscriber` 라는 사용자 subscriber 정의
+	- 3: type aliases를 통해 subscriber가 `Int` input 및 에러를 생성하지 않음을 명시
+	- 4: publisher를 통해 호출된 `receive(subscription:)`를 통해 subscriber가 subscription시 최대 3개의 값을 수신할 것임을 지정하고 subscription의 `.request(_:)` 를 호출합니다.
+	- 5: 수신한 각 값을 print 하고 `.none` 을 반환하여 subscriber가 수요를 조정하지 않음을 나타냅니다. 즉, `.none`은 `.max(0)` 과 같은 의미입니다.
+	- 6: 완료 이벤트를 print 합니다.
 
 - publisher가 뭐든 방출하려면 subscriber가 필요합니다. 따라서 다음 코드를 추가합니다.
 
@@ -433,8 +434,8 @@
   		.store(in: &subscriptions)
 	```
 
-	// 1: 3초 지연 후 전달받은 정수를 증가시키도록 이전 코드에 만든 기능을 사용하여 `Future`를 생성
-	// 2: 수신된 값과 완료 이벤트를 subscription 및 print하고 결과로 받은 `subscriptions`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
+	- 1: 3초 지연 후 전달받은 정수를 증가시키도록 이전 코드에 만든 기능을 사용하여 `Future`를 생성
+	- 2: 수신된 값과 완료 이벤트를 subscription 및 print하고 결과로 받은 `subscriptions`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
 
 	- 콘솔에는 다음과 같이 표시됩니다.
 
@@ -508,10 +509,10 @@
 	}
 	```
 
-	// 1: 사용자 error 타입을 정의합니다.
-	// 2: `String` 값과 `MyError` error를 받을 사용자 subscriber를 정의합니다.
-	// 3: 수신할 값에 따라 `Demand` 를 조정합니다.
-	// 4: 사용자 subscriber 객체를 생성합니다.
+	- 1: 사용자 error 타입을 정의합니다.
+	- 2: `String` 값과 `MyError` error를 받을 사용자 subscriber를 정의합니다.
+	- 3: 수신할 값에 따라 `Demand` 를 조정합니다.
+	- 4: 사용자 subscriber 객체를 생성합니다.
 
 	- 입력이 `"World"` 일 때 `receive(_:)` 에서 `.max(1)` 을 반환하면 새로운 최대값이 3(기존 최대값 + 1)으로 설정됩니다. 
 - 사용자 error 유형을 정의하고 수요를 조정하기 위해 수신한 값을 조정한 것외에 새로운 내용은 없어보입니다. 다음 코드를 추가해봅시다.
@@ -534,9 +535,9 @@
 	  	)
 	```
 
-	// 5: `String`과 `MyError`를 갖는 `PassthroughSubject` 객체를 생성합니다.
-	// 6: subject가 subscriber를 구독하도록 합니다.
-	// 7: `sink` 를 이용하여 또 다른 subscription을 생성합니다.
+	- 5: `String`과 `MyError`를 갖는 `PassthroughSubject` 객체를 생성합니다.
+	- 6: subject가 subscriber를 구독하도록 합니다.
+	- 7: `sink` 를 이용하여 또 다른 subscription을 생성합니다.
 
 - Passthrough Subject를 사용하면 필요에 따라 새로운 값을 게시할 수 있습니다. 다른 publisher와 마찬가지로 미리 발생할 수 있는 값과 error 유형을 선언해야 합니다. subscriber가 해당 Passthrough Subject를 subscribe 하려면 해당 유형을 자신의 Input 및 Failure 유형과 일치시켜야 합니다. 
 - 이제 값과 subcription을 통해서 받을 수 있는 Passthrough Subject를 만들었으니 값을 보내야겠죠. 다음 코드를 추가해봅시다.
@@ -565,8 +566,8 @@
 	subject.send("Still there?")
 	```
 
-	// 1: 두 번째 subscription을 취소합니다.
-	// 2: 또 다른 값을 전송합니다.
+	- 1: 두 번째 subscription을 취소합니다.
+	- 2: 또 다른 값을 전송합니다.
 
 - playground를 돌려보면 예상한 것과 가이 첫 번째 subscriber만 값을 받은 것을 알 수 있습니다. 왜냐하면 두 번째 subscriber의 subscription을 값 전송 전에 취소했기 때문입니다. 콘솔에는 다음과 같이 찍히겠죠.
 	```
@@ -628,9 +629,9 @@
 	}
 	```
 
-	// 1: `Int`와 `Never` 타입을 갖는 `CurrentValueSubject`를 생성합니다. 여기서 초기값을 0으로 두었습니다.
-	// 2: subject에 subcription을 생성하고 받은 값을 print할 수 있도록 합니다.
-	// 3: subcription을 `subscriptions` 묶음에 저장합니다. 이 set는 사본이 아니라 동일한 set가 업데이트 되도록 `inout` parameter를 통해 전달됩니다.
+	- 1: `Int`와 `Never` 타입을 갖는 `CurrentValueSubject`를 생성합니다. 여기서 초기값을 0으로 두었습니다.
+	- 2: subject에 subcription을 생성하고 받은 값을 print할 수 있도록 합니다.
+	- 3: subcription을 `subscriptions` 묶음에 저장합니다. 이 set는 사본이 아니라 동일한 set가 업데이트 되도록 `inout` parameter를 통해 전달됩니다.
 
 - `CurrentValueSubject`는 반드시 초기값으로 생성해야 합니다. 새 subscriber는 즉시 초기값 또는 해당 subject에 의해 방출된 최신 값을 받습니다. playground를 실행해봅시다.
 	```
@@ -754,9 +755,9 @@
 
 	- 앞서 다루었던 예제와 거의 유사하기 때문에, 여기서는 `receive(_:)` method 에 중점을 두고 볼 것입니다. 보면 사용자 설정 subscriber 내에서 지속적으로 수요를 조정합니다.
 
-	// 1: 새 `max` 값은 4개다. (기존 `max` 2 + 새로운 `max` 2)
-	// 2: 새 `max` 값은 5개다. (이전 `max` 4 + 새로운 `max` 1)
-	// 3: `max` 값은 5로 유지된다. (이전 `max` 4 + 새로운 `max` 0)
+	- 1: 새 `max` 값은 4개다. (기존 `max` 2 + 새로운 `max` 2)
+	- 2: 새 `max` 값은 5개다. (이전 `max` 4 + 새로운 `max` 1)
+	- 3: `max` 값은 5로 유지된다. (이전 `max` 4 + 새로운 `max` 0)
 
 - playground로 돌려보면 다음 내용을 콘솔에서 확인할 수 있습니다.
 	```
@@ -791,10 +792,10 @@
 	}
 	```
 
-	// 1: `PassthroughSubject`를 생성합니다.
-	// 2: subject에 type 삭제 publisher를 생성합니다.
-	// 3: type 삭제 publisher를 구독합니다.
-	// 4: `PassthroughSubject`를 통해 새 값을 전송합니다.
+	- 1: `PassthroughSubject`를 생성합니다.
+	- 2: subject에 type 삭제 publisher를 생성합니다.
+	- 3: type 삭제 publisher를 구독합니다.
+	- 4: `PassthroughSubject`를 통해 새 값을 전송합니다.
 
 	- `Publisher`에 **Option-click** 해보면 `AnyPublisher<Int, Never>` 를 확인할 수 있습니다.
 - `AnyPublisher`는 type 삭제된 struct로 `Publisher` protocol을 따릅니다. type 삭제는 subscriber 또는 downstream의 publisher에게 노출하고 싶지 않은 publisher의 세부사항을 가릴 수 있게 해줍니다. 
