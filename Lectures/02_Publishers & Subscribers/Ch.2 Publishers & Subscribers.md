@@ -210,11 +210,11 @@
 	
 	<img src = "https://github.com/fimuxd/Combine/blob/master/Lectures/02_Publishers%20&%20Subscribers/1.%20flow.png?raw=true" width = 400>
 
-	1. subscriber가 publisher로 subscribe 됩니다.
-	2. publisher가 subscription을 생성하고 subscriber에게 전달합니다.
-	3. subscriber는 값을 요청합니다.
-	4. publisher가 값을 전달합니다.
-	5. publisher가 완료를 전송합니다.
+	- 1: subscriber가 publisher로 subscribe 됩니다.
+	- 2: publisher가 subscription을 생성하고 subscriber에게 전달합니다.
+	- 3: subscriber는 값을 요청합니다.
+	- 4: publisher가 값을 전달합니다.
+	- 5: publisher가 완료를 전송합니다.
 
 - `Publisher` 와 이 protocol의 매우 중요한 extension 을 살펴보겠습니다. 
 
