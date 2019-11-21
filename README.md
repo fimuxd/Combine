@@ -27,7 +27,7 @@
   > | Ch# | Chapter Subject | Note |
   > |:---:| :--- | :--- |
   > |1| [Hello, Combine!](https://github.com/fimuxd/Combine/blob/master/Lectures/01_Hello%2C%20Combine!/Ch.1%20Hello%2C%20Combine!.md) | Combine 개요 |
-  > |2| Publishers & Subscribers | WIP |
+  > |2| [Publishers & Subscribers](https://github.com/fimuxd/Combine/blob/master/Lectures/02_Publishers%20%26%20Subscribers/Ch.2%20Publishers%20%26%20Subscribers.md) | publisher, subscriber, subject, future, `AnyPublisher`, `AnyCancellable` |
   
 * **Section II: Operators**
   > | Ch# | Chapter Subject | Note |
