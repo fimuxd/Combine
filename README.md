@@ -32,7 +32,7 @@
 * **Section II: Operators**
   > | Ch# | Chapter Subject | Note |
   > |:---:| :--- | :--- |
-  > |3| Transforming Operators | WIP |
+  > |3| [Transforming Operators](https://github.com/fimuxd/Combine/blob/master/Lectures/03_Transforming%20Operators/Ch.3%20Transforming%20Operators.md) | collect, map, tryMap, flatMap, replaceNil, replaceEmpty, scan |
   > |4| Filtering Operators | WIP |
   > |5| Combining Operators | WIP |
   > |6| Time Manipulation Operators | WIP |
