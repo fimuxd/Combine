@@ -20,6 +20,7 @@
 	```
 
 	// 1: notification의 이름을 생성했습니다.
+	
 	// 2: `NotificationCenter`의 default center에 접근하고 `publisher(for:object:)` method 를 호출합니다. 이 method의 return 값을 내부상수로 선언하였습니다. 
 
 	- `publisher(for:object:)`를 **Option-click** 해보면 이 method의 return 값이 default notification center가 notification을 broadcast 할 때마다 이벤트를 방출하는 `Publisher` 인 것을 알 수 있습니다. 이미 notification center에서 publisher 없이 notification을 broadcast 할 수 있는 것 같지 않나요? 
