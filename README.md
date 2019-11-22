@@ -33,7 +33,7 @@
   > | Ch# | Chapter Subject | Note |
   > |:---:| :--- | :--- |
   > |3| [Transforming Operators](https://github.com/fimuxd/Combine/blob/master/Lectures/03_Transforming%20Operators/Ch.3%20Transforming%20Operators.md) | collect, map, tryMap, flatMap, replaceNil, replaceEmpty, scan |
-  > |4| Filtering Operators | WIP |
+  > |4| [Filtering Operators](https://github.com/fimuxd/Combine/blob/master/Lectures/04_Filtering%20Operators/Ch.4%20Filtering%20Operators.md) | filter, removeDuplicates, compactMap, ignoreOutput, first, last, drop, prefix |
   > |5| Combining Operators | WIP |
   > |6| Time Manipulation Operators | WIP |
   > |7| Sequence Operators | WIP |
