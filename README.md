@@ -1,5 +1,5 @@
 # Combine
-
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter)](https://github.com/fimuxd/Combine)
 > WWDC 2019에서 새롭게 발표된 `Combine` framework 스터디를 시작합니다.
 
 ## Contents
