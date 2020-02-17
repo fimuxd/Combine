@@ -115,7 +115,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 ### 4. Subscriptions
 > **Note**: 여기서는 **subscription** 이라는 용어를 Combine의 `Subscription` protocol 뿐만 아니라 해당 object, publisher, operator, subscriber 전체 체인을 의미하는 용도로도 사용합니다.
 
-- subscription(구독)이 끝날 때 subscriber를 추가하면 체인이 시작될 때까지 subscriber가 "활성화" 됩니다. Output을 수신할 subscriber가 없다면 publisher는 값을 방출하지 않습니다.
+- subscription(구독)이 끝날 때 subscriber를 추가하면 체인이 시작될 때까지 publisher가 "활성화" 됩니다. Output을 수신할 subscriber가 없다면 publisher는 값을 방출하지 않습니다.
 - subscription은 사용자 정의 코드 및 에러처리를 사용하여 비동기 이벤트 체인을 한 번만 선언할 수 있다는 점에서 아주 좋은 개념입니다.
 - 즉, 모든 코드를 Combine으로 구현한다고 상상해보면, subscription을 통해 전체 앱의 로직을 구현하고, 한번 구현이 완료되면 시스템이 데이터를 푸시하거나 가져오거나 object 또는 다른 object를 호출할 필요 없이 모든 것이 실행되도록 할 수 있습니다. (😯)
 
