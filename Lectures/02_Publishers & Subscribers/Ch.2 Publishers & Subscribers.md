@@ -88,7 +88,7 @@
 	- 위 코드에서 `sink` 라는 subscription을 publisher에 생성해주었습니다. `sink` 를 **Option-click** 해보면 subscriber에게 closure를 연결하여 publisher의 output을 처리하는 방법을 아주 쉽게 제공함을 알 수 있습니다. 위 코드에서는 closure를 무시하고 대신 notification을 받았을 때 print 만 찍도록 했습니다.
 	- 위 코드를 돌려보면 `Notification received from a publisher!` 라는 문구가 콘솔에 표시됩니다.
 - `sink` operator는 publisher가 방출하는 값들을 계속해서 받을 것입니다. 이 것을 무제한 수요*unlimited demand* 라고 하며 이후 별도로 다루게 될 것입니다. 
-- 방금의 예제 코드에서는 무시했지만 `sinK` 연산자느 실제로 두 개의 closure를 제공합니다. 하나는 완료 이벤트 수신을 처리하고 다른 하나는 값 수신을 처리하게 됩니다. 다음 코드를 함께 봅시다.
+- 방금의 예제 코드에서는 무시했지만 `sink` 연산자는 실제로 두 개의 closure를 제공합니다. 하나는 완료 이벤트 수신을 처리하고 다른 하나는 값 수신을 처리하게 됩니다. 다음 코드를 함께 봅시다.
 	```swift
 	example(of: "Just") {
   	// 1
