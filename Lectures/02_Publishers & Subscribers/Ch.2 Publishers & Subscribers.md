@@ -181,8 +181,8 @@
 - 지금은 `sink` operator를 사용하는데 중점을 둘 것이며, 이후 Ch.8 In Practice: Project "Collage" 에서의 실습을 통해 `assign`을 더 살펴볼 것입니다.
 
 ## D. Hello Cancellable
-- subscriber가 완료되고 더 이상 publisher로부터 값을 받을 수 없는 경우 subscription을 취소하여 리소스를 확보하고 network call이 계속 발생하지 않도록 해야합니다.
-- subscription은 `AnyCancellable` 의 instance를 "취소 토큰"으로 반환하기 때문에 subscription이 완료되면 subscription을 취소 할 수 있습니다. 
+- subscriber가 완료되고 더 이상 publisher로부터 값을 받기 원하지 않을 경우 subscription을 취소하여 리소스를 확보하고 network call이 계속 발생하지 않도록 해야합니다.
+- subscription은 `AnyCancellable` 의 instance를 "취소 토큰"으로 반환하기 때문에 subscription이 필요 없어지면 subscription을 취소 할 수 있습니다. 
 - `AnyCancellable`은 `Cancellable` protocol을 따르며, 이를 위해서는 `cancel()` method가 필요합니다. 
 - 앞서 작성했던 **Subscriber** 예제 코드에 다음 코드를 추가하여 마무리 해봅시다.
 
