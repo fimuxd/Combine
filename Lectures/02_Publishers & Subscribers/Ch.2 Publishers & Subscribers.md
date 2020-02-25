@@ -169,7 +169,7 @@
 	- 1: 새 값을 print 하는 `didSet` property Observer와 class를 작성합니다.
 	- 2: 해당 class instance를 선언합니다.
 	- 3: String 배열을 통해 publisher를 생성합니다.
-	- 4: object를 통해 발생하는 각각의 값을 `value` 속성에 할당해서 publisher를 구독합니다.
+	- 4: 발생하는 각각의 값을 object의 `value` 속성에 할당하면서 publisher를 구독합니다.
 
 	- 콘솔에는 다음과 같이 표시될 것입니다.
 		```
@@ -435,7 +435,7 @@
 	```
 
 	- 1: 3초 지연 후 전달받은 정수를 증가시키도록 이전 코드에 만든 기능을 사용하여 `Future`를 생성
-	- 2: 수신된 값과 완료 이벤트를 subscription 및 print하고 결과로 받은 `subscriptions`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
+	- 2: 수신된 값과 완료 이벤트를 subscribe 및 print하고 결과로 받은 `subscription`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
 
 	- 콘솔에는 다음과 같이 표시됩니다.
 
@@ -613,7 +613,7 @@
 
 	- 첫 번째 subscriber가 error를 수신했지만 error *후에* 전송된 완료 이벤트는 수신되지 않았습니다. 이는 publisher가 *단일* 완료 이벤트(보통 완료 또는 error 여부)를 보내면 종료된다는 것을 나타냅니다. 
 - `PassthroughSubject`는 명령형 코드를 선언적인 Combine 세계에 연결하는 방법입니다. 하지만 때때로 명령형 코드에서 publisher의 현재 값을 보고 싶을 수 있습니다. 이를 위해 `CurrentValueSubject`라는 subject도 있습니다.
-- 각 subscription을 값으로 저장하는 대신 `AnyCancellable` collection에 여러 subscription을 저장할 수 있습니다. 그러면 collection이 초기화 될 때 collection에 추가된 각각의 subscription이 자동으로 취소됩니다.
+- 각 subscription을 값으로 저장하는 대신 `AnyCancellable` collection에 여러 subscription을 저장할 수 있습니다. 그러면 collection이 초기화 해제 될 때 collection에 추가된 각각의 subscription이 자동으로 취소됩니다.
 
 ### 2. CurrentValueSubject
 - 새로운 예제를 작성해봅시다.
@@ -811,7 +811,7 @@
 
 ## Summary
 - Publisher는 시간이 지남에 따라 일련의 값을 하나 이상의 subscriber에게 동기적 또는 비동기적으로 전송합니다.
-- Subscriber는 값을 받기 위해 publisher를 subscription 할 수 있습니다. 그러나 subscriber의 input 과 failure 유형은 publisher의 output과 failure 유형과 반드시 일치해야 합니다.
+- Subscriber는 값을 받기 위해 publisher를 subscribe 할 수 있습니다. 그러나 subscriber의 input 과 failure 유형은 publisher의 output과 failure 유형과 반드시 일치해야 합니다.
 - publisher를 구독하는데 사용할 수 있는 내장 연산자는 `sink(_:)` 와 `assign(to:go:)`가 있습니다.
 - subscriber는 값을 받을 때마다 값에 대한 수요를 증가시킬 수 있지만 감소시킬 수는 없습니다.
 - 리소스를 확보하고 원하지 않는 부작용을 방지하려면 각 subscription이 완료될 때 취소해야합니다.
