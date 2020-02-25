@@ -664,7 +664,7 @@
   		.store(in: &subscriptions)
 	```
 
-- 앞서 subscription 묶음이 subscription을 자동으로 취소한다는 점을 배웠는데 어떻게 확인할 수 있을까요? `print()` operator를 이용하면 모든 방출 이벤트를 콘솔에 기록할 수 있습니다. subject와 sick 사이 subscription에 `print()` operator를 삽입하여 각 subscription의 시작을 다음과 같이 수정합니다.
+- 앞서 subscription 묶음이 subscription을 자동으로 취소한다는 점을 배웠는데 어떻게 확인할 수 있을까요? `print()` operator를 이용하면 모든 방출 이벤트를 콘솔에 기록할 수 있습니다. subject와 sink 사이 subscription에 `print()` operator를 삽입하여 각 subscription의 시작을 다음과 같이 수정합니다.
 	```swift
 	subject
 	  	.print()
