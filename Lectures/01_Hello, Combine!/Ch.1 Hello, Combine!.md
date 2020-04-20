@@ -8,7 +8,7 @@ Apple은 Combine에 대해 다음과 같이 설명합니다.
 
 ## A. 비동기 프로그래밍
  단일 쓰레드 언어에서는 한 줄씩 순차적으로 코드가 실행됩니다. 예를 들면 다음과 같은 코드입니다.
- 
+
  ```swift
 begin
 	var name = "Bo-Young"
@@ -124,7 +124,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 - subscription 코드가 성공적으로 컴파일되고 작성한 코드에 논리적인 문제가 없다면 - 끝! 설계를 한대로 subscription은 사용자의 제스처, 타이머가 꺼지거나 다른 항목이 publisher 중 하나를 활성화 시킬 때 마다 비동기식으로 "실행" 될 것입니다.
 - 또한 `Cancellable`이라는 Combine에서 제공하는 protocol 덕분에 subscription을 메모리로 관리할 필요가 없습니다.
 - 시스템에서 제공하는 두 subscriber 모두 `Cancellable` protocol 을 준수합니다. 즉, subscription 코드 (예: 전체 publisher, operator, subscriber 호출 체인) 가 `Cancellable` object를 반환합니다. 해당 object를 메모리에서 해제할 때마다 전체 subscription이 취소되고 해당 리소스가 메모리에서 해제됩니다.
-- 즉, subscription을 UIViewController 속성에 저장하여 subscription 수명을 쉽게 "바인드" 할 수 있습니다. 이렇게 하면 사용자가 view 스택에서 UIViewController를 닫을 때마다 해당 속성을 초기화 해제(deinitialize)하고 subscription도 취소됩니다. (*몬말이징..어떻게 한다는거지*) 또는 이 프로세스를 자동화하기 위해 `Set<[AnyCancellable]>` 프로퍼티를 설정하고 원하는 만큼 subscription을 많이 넣을 수도 있습니다. 이 프로퍼티가 메모리에서 해제되면 그 안의 subscription들도 모두 자동으로 취소 및 해제됩니다.
+- 즉, subscription을 UIViewController 속성에 저장하여 subscription 수명을 쉽게 "바인드" 할 수 있습니다. 이렇게 하면 사용자가 view 스택에서 UIViewController를 닫을 때마다 해당 속성을 초기화 해제(deinitialize)하고 subscription도 취소됩니다. (*몬말이징..어떻게 한다는거지*) 또는 이 프로세스를 자동화하기 위해 `Set<AnyCancellable>` 프로퍼티를 설정하고 원하는 만큼 subscription을 많이 넣을 수도 있습니다. 이 프로퍼티가 메모리에서 해제되면 그 안의 subscription들도 모두 자동으로 취소 및 해제됩니다.
 
 ## E. "일반(standard)" 코드 대비 Combine 코드의 장점은?
 *너무 당연한 말이지만* Combine 없이도 최고의 앱을 만들 수 있습니다. 다만 Combine을 사용하는 것은 Core Data, `URLSession`, UIKit과 같은 추상화를 직접 작성하는 것보다 편리하고 안전하며 효율적입니다.
