@@ -88,7 +88,7 @@
 	- 위 코드에서 `sink` 라는 subscription을 publisher에 생성해주었습니다. `sink` 를 **Option-click** 해보면 subscriber에게 closure를 연결하여 publisher의 output을 처리하는 방법을 아주 쉽게 제공함을 알 수 있습니다. 위 코드에서는 closure를 무시하고 대신 notification을 받았을 때 print 만 찍도록 했습니다.
 	- 위 코드를 돌려보면 `Notification received from a publisher!` 라는 문구가 콘솔에 표시됩니다.
 - `sink` operator는 publisher가 방출하는 값들을 계속해서 받을 것입니다. 이 것을 무제한 수요*unlimited demand* 라고 하며 이후 별도로 다루게 될 것입니다. 
-- 방금의 예제 코드에서는 무시했지만 `sinK` 연산자느 실제로 두 개의 closure를 제공합니다. 하나는 완료 이벤트 수신을 처리하고 다른 하나는 값 수신을 처리하게 됩니다. 다음 코드를 함께 봅시다.
+- 방금의 예제 코드에서는 무시했지만 `sink` 연산자는 실제로 두 개의 closure를 제공합니다. 하나는 완료 이벤트 수신을 처리하고 다른 하나는 값 수신을 처리하게 됩니다. 다음 코드를 함께 봅시다.
 	```swift
 	example(of: "Just") {
   	// 1
@@ -169,7 +169,7 @@
 	- 1: 새 값을 print 하는 `didSet` property Observer와 class를 작성합니다.
 	- 2: 해당 class instance를 선언합니다.
 	- 3: String 배열을 통해 publisher를 생성합니다.
-	- 4: object를 통해 발생하는 각각의 값을 `value` 속성에 할당해서 publisher를 구독합니다.
+	- 4: 발생하는 각각의 값을 object의 `value` 속성에 할당하면서 publisher를 구독합니다.
 
 	- 콘솔에는 다음과 같이 표시될 것입니다.
 		```
@@ -181,8 +181,8 @@
 - 지금은 `sink` operator를 사용하는데 중점을 둘 것이며, 이후 Ch.8 In Practice: Project "Collage" 에서의 실습을 통해 `assign`을 더 살펴볼 것입니다.
 
 ## D. Hello Cancellable
-- subscriber가 완료되고 더 이상 publisher로부터 값을 받을 수 없는 경우 subscription을 취소하여 리소스를 확보하고 network call이 계속 발생하지 않도록 해야합니다.
-- subscription은 `AnyCancellable` 의 instance를 "취소 토큰"으로 반환하기 때문에 subscription이 완료되면 subscription을 취소 할 수 있습니다. 
+- subscriber가 완료되고 더 이상 publisher로부터 값을 받기 원하지 않을 경우 subscription을 취소하여 리소스를 확보하고 network call이 계속 발생하지 않도록 해야합니다.
+- subscription은 `AnyCancellable` 의 instance를 "취소 토큰"으로 반환하기 때문에 subscription이 필요 없어지면 subscription을 취소 할 수 있습니다. 
 - `AnyCancellable`은 `Cancellable` protocol을 따르며, 이를 위해서는 `cancel()` method가 필요합니다. 
 - 앞서 작성했던 **Subscriber** 예제 코드에 다음 코드를 추가하여 마무리 해봅시다.
 
@@ -210,7 +210,7 @@
 	
 	<img src = "https://github.com/fimuxd/Combine/blob/master/Lectures/02_Publishers%20&%20Subscribers/1.%20flow.png?raw=true" width = 400>
 
-	- 1: subscriber가 publisher로 subscribe 됩니다.
+	- 1: subscriber가 publisher를 subscribe 합니다.
 	- 2: publisher가 subscription을 생성하고 subscriber에게 전달합니다.
 	- 3: subscriber는 값을 요청합니다.
 	- 4: publisher가 값을 전달합니다.
@@ -435,7 +435,7 @@
 	```
 
 	- 1: 3초 지연 후 전달받은 정수를 증가시키도록 이전 코드에 만든 기능을 사용하여 `Future`를 생성
-	- 2: 수신된 값과 완료 이벤트를 subscription 및 print하고 결과로 받은 `subscriptions`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
+	- 2: 수신된 값과 완료 이벤트를 subscribe 및 print하고 결과로 받은 `subscription`을 `subscriptions` set에 저장(store)합니다. 이 장의 뒷 부분에서 collection에 `subscription`을 저장하는 방법에 대해 자세히 알아볼 것입니다. 일단 여기서는 넘어가죠.
 
 	- 콘솔에는 다음과 같이 표시됩니다.
 
@@ -613,7 +613,7 @@
 
 	- 첫 번째 subscriber가 error를 수신했지만 error *후에* 전송된 완료 이벤트는 수신되지 않았습니다. 이는 publisher가 *단일* 완료 이벤트(보통 완료 또는 error 여부)를 보내면 종료된다는 것을 나타냅니다. 
 - `PassthroughSubject`는 명령형 코드를 선언적인 Combine 세계에 연결하는 방법입니다. 하지만 때때로 명령형 코드에서 publisher의 현재 값을 보고 싶을 수 있습니다. 이를 위해 `CurrentValueSubject`라는 subject도 있습니다.
-- 각 subscription을 값으로 저장하는 대신 `AnyCancellable` collection에 여러 subscription을 저장할 수 있습니다. 그러면 collection이 초기화 될 때 collection에 추가된 각각의 subscription이 자동으로 취소됩니다.
+- 각 subscription을 값으로 저장하는 대신 `AnyCancellable` collection에 여러 subscription을 저장할 수 있습니다. 그러면 collection이 초기화 해제 될 때 collection에 추가된 각각의 subscription이 자동으로 취소됩니다.
 
 ### 2. CurrentValueSubject
 - 새로운 예제를 작성해봅시다.
@@ -664,7 +664,7 @@
   		.store(in: &subscriptions)
 	```
 
-- 앞서 subscription 묶음이 subscription을 자동으로 취소한다는 점을 배웠는데 어떻게 확인할 수 있을까요? `print()` operator를 이용하면 모든 방출 이벤트를 콘솔에 기록할 수 있습니다. subject와 sick 사이 subscription에 `print()` operator를 삽입하여 각 subscription의 시작을 다음과 같이 수정합니다.
+- 앞서 subscription 묶음이 subscription을 자동으로 취소한다는 점을 배웠는데 어떻게 확인할 수 있을까요? `print()` operator를 이용하면 모든 방출 이벤트를 콘솔에 기록할 수 있습니다. subject와 sink 사이 subscription에 `print()` operator를 삽입하여 각 subscription의 시작을 다음과 같이 수정합니다.
 	```swift
 	subject
 	  	.print()
@@ -811,7 +811,7 @@
 
 ## Summary
 - Publisher는 시간이 지남에 따라 일련의 값을 하나 이상의 subscriber에게 동기적 또는 비동기적으로 전송합니다.
-- Subscriber는 값을 받기 위해 publisher를 subscription 할 수 있습니다. 그러나 subscriber의 input 과 failure 유형은 publisher의 output과 failure 유형과 반드시 일치해야 합니다.
+- Subscriber는 값을 받기 위해 publisher를 subscribe 할 수 있습니다. 그러나 subscriber의 input 과 failure 유형은 publisher의 output과 failure 유형과 반드시 일치해야 합니다.
 - publisher를 구독하는데 사용할 수 있는 내장 연산자는 `sink(_:)` 와 `assign(to:go:)`가 있습니다.
 - subscriber는 값을 받을 때마다 값에 대한 수요를 증가시킬 수 있지만 감소시킬 수는 없습니다.
 - 리소스를 확보하고 원하지 않는 부작용을 방지하려면 각 subscription이 완료될 때 취소해야합니다.
