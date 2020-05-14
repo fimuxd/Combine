@@ -106,7 +106,7 @@
     	)
 	}
 	```
- 
+
 	- 1: 기본 값 형식으로 publisher를 만들 수 있는 `Just`를 이용하여 publisher를 생성합니다. 
 	- 2: publisher에 대한 subscription을 작성하고 수신된 각 이벤트에 대해 print가 찍히도록 했습니다.
 
@@ -377,7 +377,7 @@
 	
 	```swift
 	let publisher = (1...6).publisher
-	``` 
+	```
 	
 	이 배열을 다음과 같이 변경하는 것입니다.
 	
@@ -699,7 +699,7 @@
 	```
 	- 안되죠? 이 코드는 error로 표시됩니다. `CurrentValueSubject`의 `value` 속성은 정말 말 그대로 값을 의미합니다. 완료 이벤트는 `send(_:)`를 통해 존재합니다. 에러가 발생한 코드를 다음과 같이 수정해줍시다.
 		```swift
-		subject.send(completion: .finished
+		subject.send(completion: .finished)
 		```
 - playground를 다시 돌려보면 다음과 같은 결과가 출력되는 것을 확인할 수 있습니다.
 	```
