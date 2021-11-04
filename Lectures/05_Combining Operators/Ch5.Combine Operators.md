@@ -327,44 +327,44 @@ publisher
 
 ![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/7.%20switchToLatest.png?raw=true)
 
-	```swift
-	// 1
-	let publisher1 = PassthroughSubject<Int, Never>()
-	let publisher2 = PassthroughSubject<Int, Never>()
-	let publisher3 = PassthroughSubject<Int, Never>()
+```swift
+// 1
+let publisher1 = PassthroughSubject<Int, Never>()
+let publisher2 = PassthroughSubject<Int, Never>()
+let publisher3 = PassthroughSubject<Int, Never>()
 	
-	// 2
-	let publishers = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+// 2
+let publishers = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
 	
-	// 3
-	publishers
-		.switchToLatest()
-		.sink(receiveCompletion: { _ in print("Completed!") },
-			receiveValue: { print($0) })
-		.store(in: &subscriptions)
+// 3
+publishers
+	.switchToLatest()
+	.sink(receiveCompletion: { _ in print("Completed!") },
+		receiveValue: { print($0) })
+	.store(in: &subscriptions)
 	
-	// 4
-	publishers.send(publisher1)
-	publisher1.send(1)
-	publisher1.send(2)
+// 4
+publishers.send(publisher1)
+publisher1.send(1)
+publisher1.send(2)
 	
-	// 5
-	publishers.send(publisher2)
-	publisher1.send(3)
-	publisher2.send(4)
-	publisher2.send(5)
+// 5
+publishers.send(publisher2)
+publisher1.send(3)
+publisher2.send(4)
+publisher2.send(5)
 	
-	// 6
-	publishers.send(publisher3)
-	publisher2.send(6)
-	publisher3.send(7)
-	publisher3.send(8)
-	publisher3.send(9)
+// 6
+publishers.send(publisher3)
+publisher2.send(6)
+publisher3.send(7)
+publisher3.send(8)
+publisher3.send(9)
 	
-	// 7
-	publisher3.send(completion: .finished)
-	publishers.send(completion: .finished)’
-	```
+// 7
+publisher3.send(completion: .finished)
+publishers.send(completion: .finished)
+```
 - 으, 코드가 꽤 긴데요, 보시는 것보단 간단하니 너무 걱정하지 마세요. 한번 하나씩 살펴봅시다.
 	1. 세 개의 `PassthroughSubjects`를 만들었구요, 정수를 받고 에러는 발생시키지 않는 애들입니다.
 	2. 그 다음엔 다른 `PassthroughSubject`를 받는 `PassthroughSubject`를 만들었습니다. 예를 들면 앞서 만든 `publisher1`, `publisher2`, `publisher3`를 이 `publishers`로 넣을 수 있겠네요.
@@ -498,33 +498,33 @@ Completed
 ![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/12.%20combineLatest.png?raw=true)
 - 코드와 함께 살펴봅시다.
 
-	```swift
-	// 1
-	let publisher1 = PassthroughSubject<Int, Never>()
-	let publisher2 = PassthroughSubject<String, Never>()
+```swift
+// 1
+let publisher1 = PassthroughSubject<Int, Never>()
+let publisher2 = PassthroughSubject<String, Never>()
 	
-	// 2
-	publisher1
-		.combineLatest(publisher2)
-		.sink(receiveCompletion: { _ in print("Completed") },
-			receiveValue: { print("P1: \($0), P2: \($1)") })
-		.store(in: &subscriptions)
+// 2
+publisher1
+	.combineLatest(publisher2)
+	.sink(receiveCompletion: { _ in print("Completed") },
+		receiveValue: { print("P1: \($0), P2: \($1)") })
+	.store(in: &subscriptions)
 	
-	// 3
-	publisher1.send(1)
-	publisher1.send(2)
-	  
-	publisher2.send("a")
-	publisher2.send("b")
-	  
-	publisher1.send(3)
-	  
-	publisher2.send("c")
+// 3
+publisher1.send(1)
+publisher1.send(2)
+  
+publisher2.send("a")
+publisher2.send("b")
+  
+publisher1.send(3)
+  
+publisher2.send("c")
 	
-	// 4
-	publisher1.send(completion: .finished)
-	publisher2.send(completion: .finished)
-	```
+// 4
+publisher1.send(completion: .finished)
+publisher2.send(completion: .finished)
+```
 - 이 코드 역시 marble diagram을 표현한 것입니다.
 	1. 두 개의 `PassthroughSubject`를 만들어줍니다. 하나는 `Int` 타입을 받구요, 다른 하나는 `String` 타입을 받습니다. 둘다 에러는 없네요.
 	2. `publisher2`를 `publisher1`과 결합시켜줍니다. Combine을 통해서는 한 번에 최대 4개의 서로 다른 publisher들을 결합할 수 있습니다. 
@@ -550,36 +550,36 @@ Completed
 ![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/13.%20zip.png?raw=true)
 - 이 diagram을 코드로 살펴보겠습니다.
 
-	```swift
-	// 1
-	let publisher1 = PassthroughSubject<Int, Never>()
-	let publisher2 = PassthroughSubject<String, Never>()
+```swift
+// 1
+let publisher1 = PassthroughSubject<Int, Never>()
+let publisher2 = PassthroughSubject<String, Never>()
 	
-	// 2
-	publisher1
-		.zip(publisher2)
-		.sink(receiveCompletion: { _ in print("Completed") },
-			receiveValue: { print("P1: \($0), P2: \($1)") })
-		.store(in: &subscriptions)
+// 2
+publisher1
+	.zip(publisher2)
+	.sink(receiveCompletion: { _ in print("Completed") },
+		receiveValue: { print("P1: \($0), P2: \($1)") })
+	.store(in: &subscriptions)
 	
-	// 3
-	publisher1.send(1)
-	publisher1.send(2)
-	publisher2.send("a")
-	publisher2.send("b")
-	publisher1.send(3)
-	publisher2.send("c")
-	publisher2.send("d")
+// 3
+publisher1.send(1)
+publisher1.send(2)
+publisher2.send("a")
+publisher2.send("b")
+publisher1.send(3)
+publisher2.send("c")
+publisher2.send("d")
 	
-	// 4
-	publisher1.send(completion: .finished)
-	publisher2.send(completion: .finished) 
-	```
+// 4
+publisher1.send(completion: .finished)
+publisher2.send(completion: .finished) 
+```
 
-	1. 두 개의 `PassthroughSubject`를 만들어줍니다. 첫 번째는 `Int` 타입을, 두 번째는 `String` 타입을 받고 있습니다. 둘 다 에러를 발생시키진 않습니다.
-	2. `publisher1`과 `publisher2`를 `zip`으로 연결해줍니다. 
-	3. 각각의 값들을 publisher들에게 보내줍니다.
-	4. 두 publisher들에 완료 이벤트를 전달합니다. 
+1. 두 개의 `PassthroughSubject`를 만들어줍니다. 첫 번째는 `Int` 타입을, 두 번째는 `String` 타입을 받고 있습니다. 둘 다 에러를 발생시키진 않습니다.
+2. `publisher1`과 `publisher2`를 `zip`으로 연결해줍니다. 
+3. 각각의 값들을 publisher들에게 보내줍니다.
+4. 두 publisher들에 완료 이벤트를 전달합니다. 
 - 코드를 실행시키면 다음과 같이 확인됩니다.
 
 	```swift
