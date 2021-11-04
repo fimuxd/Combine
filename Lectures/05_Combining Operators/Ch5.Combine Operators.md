@@ -327,44 +327,44 @@ publisher
 
 ![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/7.%20switchToLatest.png?raw=true)
 
-```swift
-// 1
-let publisher1 = PassthroughSubject<Int, Never>()
-let publisher2 = PassthroughSubject<Int, Never>()
-let publisher3 = PassthroughSubject<Int, Never>()
-
-// 2
-let publishers = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
-
-// 3
-publishers
-	.switchToLatest()
-	.sink(receiveCompletion: { _ in print("Completed!") },
-		receiveValue: { print($0) })
-	.store(in: &subscriptions)
-
-// 4
-publishers.send(publisher1)
-publisher1.send(1)
-publisher1.send(2)
-
-// 5
-publishers.send(publisher2)
-publisher1.send(3)
-publisher2.send(4)
-publisher2.send(5)
-
-// 6
-publishers.send(publisher3)
-publisher2.send(6)
-publisher3.send(7)
-publisher3.send(8)
-publisher3.send(9)
-
-// 7
-publisher3.send(completion: .finished)
-publishers.send(completion: .finished)’
-```
+	```swift
+	// 1
+	let publisher1 = PassthroughSubject<Int, Never>()
+	let publisher2 = PassthroughSubject<Int, Never>()
+	let publisher3 = PassthroughSubject<Int, Never>()
+	
+	// 2
+	let publishers = PassthroughSubject<PassthroughSubject<Int, Never>, Never>()
+	
+	// 3
+	publishers
+		.switchToLatest()
+		.sink(receiveCompletion: { _ in print("Completed!") },
+			receiveValue: { print($0) })
+		.store(in: &subscriptions)
+	
+	// 4
+	publishers.send(publisher1)
+	publisher1.send(1)
+	publisher1.send(2)
+	
+	// 5
+	publishers.send(publisher2)
+	publisher1.send(3)
+	publisher2.send(4)
+	publisher2.send(5)
+	
+	// 6
+	publishers.send(publisher3)
+	publisher2.send(6)
+	publisher3.send(7)
+	publisher3.send(8)
+	publisher3.send(9)
+	
+	// 7
+	publisher3.send(completion: .finished)
+	publishers.send(completion: .finished)’
+	```
 - 으, 코드가 꽤 긴데요, 보시는 것보단 간단하니 너무 걱정하지 마세요. 한번 하나씩 살펴봅시다.
 	1. 세 개의 `PassthroughSubjects`를 만들었구요, 정수를 받고 에러는 발생시키지 않는 애들입니다.
 	2. 그 다음엔 다른 `PassthroughSubject`를 받는 `PassthroughSubject`를 만들었습니다. 예를 들면 앞서 만든 `publisher1`, `publisher2`, `publisher3`를 이 `publishers`로 넣을 수 있겠네요.
@@ -375,52 +375,52 @@ publishers.send(completion: .finished)’
 	7. 마지막으로, completion 이벤트를 현재 구독되는 publisher인 `publisher3`을 통해 보내줍니다. 그리고 또 다른 completion 이벤트를 `publishers`에게도 보내줍니다. 이를 통해 현재 활성화 상태인 모든 구독은 완료될겁니다.
 - marble diagram과 함께 확인하셨다면 아마 결과를 이미 예상하실거예요.
 
-```swift
-1
-2
-4
-5
-7
-8
-9
-completed!
-```
+	```swift
+	1
+	2
+	4
+	5
+	7
+	8
+	9
+	completed!
+	```
 - 만약 이게 실제 app에서 어떻게 유용할 수 있는지 의문스러운 분들은 이런 상황을 생각해보세요.
 - 사용자가 네트워크 요청을 할 수 있는 버튼이 있습니다. 만약 버튼을 한번 탭한 즉시 또 같은 버튼을 탭한다면 네트워크 요청이 두 번 되겠죠. 하지만 이렇게 진행 중인 요청이 있을 때 중복해서 요청이 들어올 수 있고, 이럴 때는 가장 마지막(*latest*) 요청에 대해서만 처리하고 싶다면 어떻게 할 수 있을까요? 바로 `switchToLatest`가 여러분을 구원해줄 수 있을거예요.
 - 코드로 한번 살펴보겠습니다.
 
-```swift
-let url = URL(string: "https://source.unsplash.com/random")!
-  
-// 1
-func getImage() -> AnyPublisher<UIImage?, Never> {
-	return URLSession.shared
-		.dataTaskPublisher(for: url)
-		.map { data, _ in UIImage(data: data) }
-		.print("image")
-		.replaceError(with: nil)
-		.eraseToAnyPublisher()
-}
-
-// 2
-let taps = PassthroughSubject<Void, Never>()
-
-taps
-	.map { _ in getImage() } // 3
-	.switchToLatest() // 4
-	.sink(receiveValue: { _ in })
-	.store(in: &subscriptions)
-
-// 5
-taps.send()
-
-DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+	```swift
+	let url = URL(string: "https://source.unsplash.com/random")!
+	  
+	// 1
+	func getImage() -> AnyPublisher<UIImage?, Never> {
+		return URLSession.shared
+			.dataTaskPublisher(for: url)
+			.map { data, _ in UIImage(data: data) }
+			.print("image")
+			.replaceError(with: nil)
+			.eraseToAnyPublisher()
+	}
+	
+	// 2
+	let taps = PassthroughSubject<Void, Never>()
+	
+	taps
+		.map { _ in getImage() } // 3
+		.switchToLatest() // 4
+		.sink(receiveValue: { _ in })
+		.store(in: &subscriptions)
+	
+	// 5
 	taps.send()
-}
-DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
-	taps.send()
-}
-```
+	
+	DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+		taps.send()
+	}
+	DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
+		taps.send()
+	}
+	```
 -이번에도 코드가 꽤 길고 복잡해보이는데요, 간단합니다. 살펴볼게요.
 	1. `getImage()`라는 함수를 선언합니다. Unsplash의 공공API를 통해 무작위 이미지를 가져올 수 있는 네트워크 요청을 할겁니다. Combine의 기본 표현 중 하나인 `URLSession.dataTaskPublisher`를 이용할거구요, 이와 관련해서는 Section 3, "Combine in Action"에서 다뤄볼겁니다.
 	2. 사용자의 버튼 탭 액션을 방출하는 `PassthroughSubject`를 만들어줍니다. 
@@ -429,24 +429,167 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
 	5. `DispatchQueue`를 활용하여 3개의 버튼 탭 이벤트를 구현합니다. 첫 번째 탭은 즉시 발생할거구요, 두 번째 탭은 3초 뒤에, 세 번째 탭은 두 번째 탭이 발생하고 0.1초 뒤에 발생할겁니다.
 - 코드를 실행시켜볼까요.
 
-```swift
-image: receive subscription: (DataTaskPublisher)
-image: request unlimited
-image: receive value: (Optional(<UIImage:0x600000364120 anonymous {1080, 720}>))
-image: receive finished
-image: receive subscription: (DataTaskPublisher)
-image: request unlimited
-image: receive cancel
-image: receive subscription: (DataTaskPublisher)
-image: request unlimited
-image: receive value: (Optional(<UIImage:0x600000378d80 anonymous {1080, 1620}>))
-image: receive finished
-```
+	```swift
+	image: receive subscription: (DataTaskPublisher)
+	image: request unlimited
+	image: receive value: (Optional(<UIImage:0x600000364120 anonymous {1080, 720}>))
+	image: receive finished
+	image: receive subscription: (DataTaskPublisher)
+	image: request unlimited
+	image: receive cancel
+	image: receive subscription: (DataTaskPublisher)
+	image: request unlimited
+	image: receive value: (Optional(<UIImage:0x600000378d80 anonymous {1080, 1620}>))
+	image: receive finished
+	```
 - 여기서 주목해야할 것은 실제 2개의 이미지만 가져왔다는겁니다. 왜냐하면 두 번째 탭 0.1초 뒤에 불린 세 번째 탭으로 인해 두 번째 탭에 대한 구독은 취소되었기 때문입니다. 이 것이 `image: receive cancel`라고 표현된 것이죠.
 
 ### 2. `merge(with:)`
+- 이 연산자는 서로 같은 타입을 같은 publisher를 **교차**하며 나타내게 됩니다.
+![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/11.%20merge.png?raw=true)
+- 코드와 함께 확인해보겠습니다.
+
+	```swift
+	// 1
+	let publisher1 = PassthroughSubject<Int, Never>()
+	let publisher2 = PassthroughSubject<Int, Never>()
+	
+	// 2
+	publisher1
+		.merge(with: publisher2)
+		.sink(receiveCompletion: { _ in print("Completed") },
+	      		receiveValue: { print($0) })
+		.store(in: &subscriptions)
+	
+	// 3
+	publisher1.send(1)
+	publisher1.send(2)
+	
+	publisher2.send(3)
+	
+	publisher1.send(4)
+	
+	publisher2.send(5)
+	
+	// 4
+	publisher1.send(completion: .finished)
+	publisher2.send(completion: .finished)
+	```
+- 위 코드는 marble diagram을 나타낸겁니다. 하나씩 살펴봅시다.
+	1. 두 개의 `PassthroughSubject`를 만들어줍니다. 둘다 `Int` 타입을 받고 에러는 방출하지 않습니다. 
+	2. `publisher1`과 `publisher2`를 합쳐(Merge) 줍니다. Combine을 통해 이러한 방식으로 최대 8개의 서로 다른 publisher를 merge 할 수 있습니다. 
+	3. `1`과 `2`를 `publisher1`에서 보내주고 `3`을 `publisher2`로, 그리고 다시 `4`를 `publisher1`에 넣어주고 마지막으로 `5`를 `publisher2`를 통해 전달합니다. 
+	4. 두 publisher에 완료 이벤트를 보냅니다. 
+- 코드를 실행시키면 다음과 같이 나타납니다.
+
+```swift
+1
+2
+3
+4
+5
+Completed
+```
 
 ### 3. `combineLatest`
-### 4. `zip`
+- `combineLatest`를 이용하면 서로 다른 publisher들을 결합시킬 수 있습니다. 또한 결합되는 publisher들이 꼭 같은 타입일 필요도 없습니다. 아주 유용한 포인트죠. 단, 상호 교차하며 서로 다른 타입을 방출하는 것이 아니라 이런 타입을 **tuple** 형태로 묶어서 방출하게 됩니다.
+- 여기서 또 한 가지 짚고 넘어갈 부분은, `combineLatest`로 결합된 모든 publisher들은 최소 한 번은 값을 방출해야 한다는 것입니다. 
 
-## 6. Key points
+![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/12.%20combineLatest.png?raw=true)
+- 코드와 함께 살펴봅시다.
+
+	```swift
+	// 1
+	let publisher1 = PassthroughSubject<Int, Never>()
+	let publisher2 = PassthroughSubject<String, Never>()
+	
+	// 2
+	publisher1
+		.combineLatest(publisher2)
+		.sink(receiveCompletion: { _ in print("Completed") },
+			receiveValue: { print("P1: \($0), P2: \($1)") })
+		.store(in: &subscriptions)
+	
+	// 3
+	publisher1.send(1)
+	publisher1.send(2)
+	  
+	publisher2.send("a")
+	publisher2.send("b")
+	  
+	publisher1.send(3)
+	  
+	publisher2.send("c")
+	
+	// 4
+	publisher1.send(completion: .finished)
+	publisher2.send(completion: .finished)
+	```
+- 이 코드 역시 marble diagram을 표현한 것입니다.
+	1. 두 개의 `PassthroughSubject`를 만들어줍니다. 하나는 `Int` 타입을 받구요, 다른 하나는 `String` 타입을 받습니다. 둘다 에러는 없네요.
+	2. `publisher2`를 `publisher1`과 결합시켜줍니다. Combine을 통해서는 한 번에 최대 4개의 서로 다른 publisher들을 결합할 수 있습니다. 
+	3. `publisher1`에 `1`, `2`를 보내고 `publisher2`에 `"a"`와 `"b"`를 보냅니다. 그리고 `publisher1`에 `3`을, `publisher2`에 `"c"`를 보내보죠.
+	4. 두 publisher들에게 완료 이벤트를 보냅니다.
+- 코드를 실행시키면 다음과 같이 표현됩니다.
+	```swift
+	P1: 2, P2: a
+	P1: 2, P2: b
+	P1: 3, P2: b
+	P1: 3, P2: c
+	Completed
+	```
+- 보시면 `publisher1`이 방출한 `1`은 `combineLatest`를 통해서는 보여지지 않는 것을 확인할 수 있습니다. 
+- 이는 `combineLatest`는 모든 publisher들이 최소 1개의 값을 방출한 다음부터 동작하기 때문입니다. 
+- 여기서는 `"a"`가 방출되었을 때 가장 최신의 `publisher1` 값은 `2`였기 때문에 `(2, "a")`가 방출된 것입니다.
+
+### 4. `zip`
+- 드디어 이 장의 마지막 연산자입니다. 바로 `zip`인데요, 아마 Swift의 기본 라이브러리에 `Sequence` 타입에 대해 같은 이름의 메소드가 있어서 이 연산자가 어떤 역할을 할지 추측하실 수 있을겁니다. 
+- 예상하신 것처럼 기본 Swift의 zip과 비슷하게 동작합니다. 같은 index 상에 있는 값들을 tuple로 조합하여 방출하게 됩니다. zip은 각각의 publisher 모두가 값을 방출하길 기다렸다가 tuple로 조합하게 됩니다. 
+- 이 것은 만약 여러분이 두개의 publisher를 고정(zipping) 시켰다면 여러분은 두 개의 publisher가 값을 방출할 때마다 하나의 tuple을 받게 된다는 의미입니다.
+
+![](https://github.com/fimuxd/Combine/blob/master/Lectures/05_Combining%20Operators/13.%20zip.png?raw=true)
+- 이 diagram을 코드로 살펴보겠습니다.
+
+	```swift
+	// 1
+	let publisher1 = PassthroughSubject<Int, Never>()
+	let publisher2 = PassthroughSubject<String, Never>()
+	
+	// 2
+	publisher1
+		.zip(publisher2)
+		.sink(receiveCompletion: { _ in print("Completed") },
+			receiveValue: { print("P1: \($0), P2: \($1)") })
+		.store(in: &subscriptions)
+	
+	// 3
+	publisher1.send(1)
+	publisher1.send(2)
+	publisher2.send("a")
+	publisher2.send("b")
+	publisher1.send(3)
+	publisher2.send("c")
+	publisher2.send("d")
+	
+	// 4
+	publisher1.send(completion: .finished)
+	publisher2.send(completion: .finished) 
+	```
+
+	1. 두 개의 `PassthroughSubject`를 만들어줍니다. 첫 번째는 `Int` 타입을, 두 번째는 `String` 타입을 받고 있습니다. 둘 다 에러를 발생시키진 않습니다.
+	2. `publisher1`과 `publisher2`를 `zip`으로 연결해줍니다. 
+	3. 각각의 값들을 publisher들에게 보내줍니다.
+	4. 두 publisher들에 완료 이벤트를 전달합니다. 
+- 코드를 실행시키면 다음과 같이 확인됩니다.
+
+	```swift
+	P1: 1, P2: a
+	P1: 2, P2: b
+	P1: 3, P2: c
+	Completed
+	```
+- 주목해야할 것은 zip으로 결합된 publisher는 다른 publisher가 값을 방출할 때까지 기다린다는 점입니다. 
+
+***
+
+##### Artwork/images/designs: from Combine: Asynchronous Programming with Swift, available at www.raywenderlich.com
