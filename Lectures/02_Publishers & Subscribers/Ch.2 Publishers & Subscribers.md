@@ -58,7 +58,7 @@
 	- 6: observer를 notification center에서 제거합니다.
 
 	- 위 코드를 playground에서 실행시킨다면 콘솔에 `Notification received!` 가 입력되는 것을 확인할 수 있습니다.
-	- 다만 위 코드 예제에서는 outputd이 실제로 publisher를 통해 나온 것이 아니기 때문에 약간 오해의 소지가 있습니다. 이를 완전히 이해하려면 subscriber를 알아야 합니다.
+	- 다만 위 코드 예제에서는 output이 실제로 publisher를 통해 나온 것이 아니기 때문에 약간 오해의 소지가 있습니다. 이를 완전히 이해하려면 subscriber를 알아야 합니다.
 
 ## C. Hello Subscriber
 - `Subscriber` protocol은 publisher로부터 받을 수 있는 값을 정의합니다. 기본 흐름에 중점을 두고 다음 예제 코드를 보겠습니다.
@@ -290,7 +290,7 @@
 
 - `Subscriber` 에서는 `receive(_:)`가 `Demand`를 반환합니다. `receive(_:)`에서 `subscription.request(_:)`을 처음 호출할 때 subscriber가 받으려는 최대 값 수를 지정하더라도 새 값을 받을 때마다 최대 값을 조절할 수 있다는 의미입니다.
 
-> **Note**: `Subscriber.receive(_:` 에서 `max` 를 조정하여 최대 값을 조절할 수 있습니다. 즉, 새 `max` 값이 현재 `max` 값에 추가됩니다. `max`값은 반드시 양수여야하며 음수를 전달하면 `fatalError`가 발생합니다. 즉, 새 값을 받을 때마다 기존의 `max` 값을 늘릴 수 있지만 줄일 수는 없습니다. 
+> **Note**: `Subscriber.receive(_:)` 에서 `max` 를 조정하여 최대 값을 조절할 수 있습니다. 즉, 새 `max` 값이 현재 `max` 값에 추가됩니다. `max`값은 반드시 양수여야하며 음수를 전달하면 `fatalError`가 발생합니다. 즉, 새 값을 받을 때마다 기존의 `max` 값을 늘릴 수 있지만 줄일 수는 없습니다. 
 
 
 ## F. 사용자 subscriber 만들기
