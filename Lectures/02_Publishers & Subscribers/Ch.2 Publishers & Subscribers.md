@@ -352,7 +352,7 @@
 
 	- 완료 이벤트를 받지 않은 것을 확인할 수 있습니다. 왜냐하면 publisher에 한정된 갯수의 값이 있고 `.max(3)`을 통해 수요를 지정했기 때문입니다. 
 
-- 우리가 만든 사용자 subscriber의 `receive(_:)` 에서 `.none()` 을 `.unlimited`로 변경하여 `receive(_:)` method를 다음과 같이 수정합니다.
+- 우리가 만든 사용자 subscriber의 `receive(_:)` 에서 `.none` 을 `.unlimited`로 변경하여 `receive(_:)` method를 다음과 같이 수정합니다.
 	```swift
 	func receive(_ input: Int) -> Subscribers.Demand {
   		print("Received value", input)
