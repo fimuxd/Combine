@@ -89,7 +89,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 - 위 그림을 통해 알 수 있듯이 Publishers protocol은 두 가지 유형을 가집니다.
 	- `Publisher.Output`은 publisher의 방출 값입니다. 만약 publisher가 `Int`에 특화되었다면 `String` 이나 `Date` 타입을 방출할 수는 없습니다. 
 	- `Publisher.Failure`는 publisher가 뱉을 수 있는 error 타입입니다. 만약 publisher가 절대 실패하지 않는다면, 이를 `Never` 라는 실패 타입으로 표현할 수 있습니다.
-- 띠라서 주어진 publisher를 구독할 때 어떤 값이 떨어질지, 실패한다면 어떤 에러가 떨어질지 예상 가능합니다.
+- 따라서 주어진 publisher를 구독할 때 어떤 값이 떨어질지, 실패한다면 어떤 에러가 떨어질지 예상 가능합니다.
 
 ### 2. Operators
 - Operators는 `Publisher` protocol로 선언된 method이며, 선언된 Publishers와 동일하거나 새로운 Publishers로 반환합니다.
@@ -140,7 +140,7 @@ Combine의 세 가지 핵심 요소는 Publisher, Subscriber, Operator 입니다
 
 ## F. 앱 구조
 - Combine은 앱 구조에 영향을 주는 framework가 아닙니다. MVC, MVVM, VIPER 등 어디서든 사용할 수 있습니다.
-- 코드에서 개선하려는 부분에서만 Combine 코드를 선택적으로 추가할 수 있으며 도 아니면 모 식의 선택을 하지 않아도 괜찮습니다. 데이터 모델을 변환하거나 네트워킹 계층을 조정하거나 기존 기능을 그대로 유지하면서 앱에 추가한 새 코드에서만 Combine을 사용하여 시작할 수 있습니다. 
+- 코드에서 개선하려는 부분에서만 Combine 코드를 선택적으로 추가할 수 있으며 모 아니면 도 식의 선택을 하지 않아도 괜찮습니다. 데이터 모델을 변환하거나 네트워킹 계층을 조정하거나 기존 기능을 그대로 유지하면서 앱에 추가한 새 코드에서만 Combine을 사용하여 시작할 수 있습니다. 
 - Combine과 SwiftUI를 동시에 채택하면 약간 다른 이야기가 될 수 있습니다. 이 경우 MVC 아키텍처에서 C를 삭제하는 것이 좋습니다만 이는 Combine과 SwiftUI를 함께 사용하기 때문에 요구되는 것입니다. 이 둘은 같은 공간에 있을 때 더욱 간단하게 작동합니다.
 - View Controller는 Combine/SwiftUI 팀에 필요없습니다. 데이터 모델에서 View에 이르기까지 반응형 프로그래밍을 사용하는 경우 View를 제어하기 위해 특별한 Controller가 필요하지 않습니다. (✨)
 
